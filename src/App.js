@@ -9,8 +9,9 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import MyPets from "./components/MyPets";
 import Create from "./components/Create";
+import Details from "./components/Details";
+import Logout from "./components/Logout";
 // import Edit from "./components/Edit";
-// import Details from "./components/Details";
 
 function App() {
     const [userInfo, setUserInfo] = useState({ isAuthenticated: false, email: '' });
@@ -29,7 +30,14 @@ function App() {
             isAuthenticated: true,
             user: email
         })
-    }
+    };
+
+    const onLogout = () => {
+        setUserInfo({
+            isAuthenticated: false,
+            user: null
+        })
+    };
 
     return (
         <div id="container">
@@ -40,9 +48,11 @@ function App() {
                 <Routes>
                     <Route path="/dashboard/*" element={<Dashboard />} />
                     <Route path="/login" element={<Login onLogin={onLogin} />} />
+                    <Route path="/logout" element={<Logout onLogout={onLogout} />} />
                     <Route path="/register" element={<Register />} />
                     <Route path="/my-pets" element={<MyPets />} />
                     <Route path="/create" element={<Create />} />
+                    <Route path="/details/:petId" element={<Details />} />
                 </Routes>
             </main>
 

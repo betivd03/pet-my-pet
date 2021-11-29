@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const PetCard = ({
     pet
 }) => {
@@ -6,10 +8,9 @@ const PetCard = ({
             <h3>Name: {pet.name}</h3>
             <p>Type: {pet.type}</p>
             <p className="img"><img src={pet.imageUrl} alt="img" /></p>
-            <a className="button" href="a">Details</a>
+            <Link className="button" to={`/details/${pet._id}`}>Details</Link>
         </li>
     );
 };
 
 export default PetCard;
-;

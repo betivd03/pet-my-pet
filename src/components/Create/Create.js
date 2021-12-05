@@ -1,9 +1,29 @@
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import * as petService from "../../services/petService.js";
 
 const Create = () => {
     const navigate = useNavigate();
+    const [types, setTypes] = useState([]);
+    const [categories, setCategories] = useState([]);
+
+    useEffect(() => {
+        fetch('http://custom-server-softuni.herokuapp.com/jsonstore/types')
+            .then(res => res.json())
+            .then(res => {
+                let typesResult = Object.values(res);
+                let categories = typesResult.reduce((a, x) => {
+                    if (!a[x.category]) {
+                        a[x.category] = [];
+                    }
+                    a[x.category].push(x);
+                    return a;
+                }, {});
+                setTypes(typesResult);
+                setCategories(categories);
+            })
+    }, []);
 
     const onPetCreate = (e) => {
         e.preventDefault();
@@ -24,6 +44,10 @@ const Create = () => {
                 navigate('/dashboard');
             })
     };
+
+    const onCategoryChange = (e) => {
+        setTypes(categories[e.target.value]);
+    }
 
     return (
         <section id="create-page" className="create">
@@ -49,14 +73,18 @@ const Create = () => {
                         </span>
                     </p>
                     <p className="field">
+                        <label htmlFor="category">Category</label>
+                        <span className="input">
+                            <select id="category" name="category" onChange={onCategoryChange}>
+                                {Object.keys(categories).map(x => <option key={x} value={x}>{x}</option>)}
+                            </select>
+                        </span>
+                    </p>
+                    <p className="field">
                         <label htmlFor="type">Type</label>
                         <span className="input">
                             <select id="type" name="type">
-                                <option value="cat">Cat</option>
-                                <option value="dog">Dog</option>
-                                <option value="parrot">Parrot</option>
-                                <option value="reptile">Reptile</option>
-                                <option value="other">Other</option>
+                                {types.map(x => <option key={x._id} value={x._id}>{x.name}</option>)}
                             </select>
                         </span>
                     </p>

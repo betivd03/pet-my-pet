@@ -2,7 +2,7 @@ import { Routes, Route, Link } from "react-router-dom";
 
 // import logo from "../../logo.svg";
 
-import { ReactComponent as Logo } from "../../logo.svg";
+// import { ReactComponent as Logo } from "../../logo.svg";
 
 import './Dashboard.css';
 
@@ -25,7 +25,7 @@ const Dashboard = () => {
             </section>
 
             {/* <img srs={logo} title="logo" alt="logo" /> */}
-            <Logo />
+            {/* <Logo /> */}
         </section>
     );
 };

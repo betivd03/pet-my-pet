@@ -17,13 +17,13 @@ const Login = ({
 
         authService.login(email, password)
             .then(authData => {
-                console.log('logged');
-                console.log(authData);
+                onLogin(authData);
+                navigate('/dashboard');
             })
-
-        onLogin(email);
-
-        navigate('/');
+            .catch(err => {
+                // TODO: Show notification
+                console.log(err);
+            });
     };
 
     return (

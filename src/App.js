@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 
 // import * as authService from "./services/authService.js";
 import { AuthContext } from "./contexts/AuthContext.js";
+import useLocalStorage from "./hooks/useLocalStorageHook.js";
 
 import Header from "./components/Header";
 import Dashboard from "./components/Dashboard";
@@ -13,6 +14,12 @@ import Create from "./components/Create";
 import Details from "./components/Details";
 import Logout from "./components/Logout";
 // import Edit from "./components/Edit";
+
+const initialAuthState = {
+    _id: "",
+    accessToken: "",
+    email: ""
+};
 
 function App() {
     // const [userInfo, setUserInfo] = useState({ isAuthenticated: false, email: '' });
@@ -26,13 +33,10 @@ function App() {
     //     })
     // }, []);
 
-    const [user, setUser] = useState({
-        _id: "",
-        accessToken: "",
-        email: ""
-    });
+    // const [user, setUser] = useState({
+    const [user, setUser] = useLocalStorage('user', initialAuthState);
 
-    const onLogin = (authData) => {
+    const login = (authData) => {
         // setUserInfo({
         //     isAuthenticated: true,
         //     user: email
@@ -41,24 +45,26 @@ function App() {
         setUser(authData);
     };
 
-    const onLogout = () => {
+    const logout = () => {
         // setUserInfo({
         //     isAuthenticated: false,
         //     user: null
         // })
+
+        setUser(initialAuthState);
     };
 
     return (
-        <AuthContext.Provider value={true}>
+        <AuthContext.Provider value={{user, login, logout}}>
             <div id="container">
 
-                <Header email={user.email} />
+                <Header />
 
                 <main id="site-content">
                     <Routes>
                         <Route path="/dashboard/*" element={<Dashboard />} />
-                        <Route path="/login" element={<Login onLogin={onLogin} />} />
-                        <Route path="/logout" element={<Logout onLogout={onLogout} />} />
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/logout" element={<Logout />} />
                         <Route path="/register" element={<Register />} />
                         <Route path="/my-pets" element={<MyPets />} />
                         <Route path="/create" element={<Create />} />

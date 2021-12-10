@@ -30,7 +30,7 @@ export const register = (email, password) => {
 }
 
 export const logout = (token) => {
-    fetch(`${baseUrl}/users/logout`, {
+    return fetch(`${baseUrl}/users/logout`, {
         headers: {
             'X-Authorization': token
         },

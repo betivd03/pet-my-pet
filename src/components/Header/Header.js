@@ -17,7 +17,7 @@ const Header = () => {
 
     let userNavigation = (
         <div id="user">
-            <span>Welcome, {user.email}</span>
+            <span>Welcome, {user.username}</span>
             <Link to="/my-pets" className="button">My Pets</Link>
             <Link to="/create" className="button">Add Pet</Link>
             <Link to="/logout" className="button">Logout</Link>

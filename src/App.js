@@ -18,7 +18,8 @@ import Logout from "./components/Logout";
 const initialAuthState = {
     _id: "",
     accessToken: "",
-    email: ""
+    email: "",
+    username: ""
 };
 
 function App() {
